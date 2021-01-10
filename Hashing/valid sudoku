@@ -1,0 +1,119 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int isValidSudoku(final List<String> A) {
+        int[][] dp=new int[9][9];
+        
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                char temp=A.get(i).charAt(j);
+                if(temp=='.')
+                {
+                    dp[i][j]=0;   
+                }
+                else
+                {
+                    int val=temp-'0';
+                    dp[i][j]=val;
+                }
+            }
+        }
+        
+       //Checking for all the rows one by one
+        for(int i=0;i<9;i++)
+        {
+            HashSet<Integer> hs=new HashSet<Integer>();
+            for(int j=0;j<9;j++)
+            {
+                if(dp[i][j]!=0)
+                {
+                    if(hs.contains(dp[i][j]))
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        hs.add(dp[i][j]);
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        
+        //Checking for all the columns one by one
+        for(int i=0;i<9;i++)
+        {
+            HashSet<Integer> hs=new HashSet<Integer>();
+            for(int j=0;j<9;j++)
+            {
+                if(dp[j][i]!=0)
+                {
+                    if(hs.contains(dp[j][i]))
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        hs.add(dp[j][i]);
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        
+        
+        //Checking for every cube one by one
+        int[][] arr={
+            {0,0,2,2},
+            {0,3,2,5},
+            {0,6,2,8},
+            {3,0,5,2},
+            {3,3,5,5},
+            {3,6,5,8},   
+            {6,0,8,2},
+            {6,3,8,5},    
+            {6,6,8,8}
+        };
+        
+        for(int k=0;k<9;k++)
+        {
+            int starti=arr[k][0];
+            int startj=arr[k][1];
+            int endi=arr[k][2];
+            int endj=arr[k][3];
+            
+            HashSet<Integer> hs=new HashSet<Integer>();
+            
+            for(int i=starti;i<=endi;i++)
+            {
+                for(int j=startj;j<=endj;j++)
+                {
+                    if(dp[i][j]!=0)
+                    {
+                        if(hs.contains(dp[i][j]))
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            hs.add(dp[i][j]);
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
+            
+        return 1;
+    }
+}
